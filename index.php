@@ -15,7 +15,12 @@
         <h3 class="text-center my-5">Daftar Menu</h3>
         <div class="row mb-4 align-items-center">
           <div class="col-md-6">
-            <h5 class="text-muted mb-0" id="total_menu"></h5>
+            <div class="form-group mb-0 row">
+              <label for="search" class="col-sm-auto col-form-label">Search</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control-sm form-control" id="keyword" name="keyword">
+              </div>
+            </div>
           </div>
           <div class="col-md-3">
             <div class="form-group mb-0 row">
@@ -23,7 +28,7 @@
               <div class="col-sm-8">
                 <select class="form-control custom-select-sm" id="kategori">
                   <option value="0">Semua</option>
-                  <?php while ($row_kategori = mysqli_fetch_assoc($result_kategori)): ?>
+                  <?php while ($row_kategori = mysqli_fetch_assoc($result_kategori)) : ?>
                     <option value="<?= $row_kategori['id'] ?>"><?= $row_kategori['nama'] ?></option>
                   <?php endwhile ?>
                 </select>
@@ -60,18 +65,19 @@
 <script>
   $(document).ready(function() {
 
-    loadData($('#kategori').val(), $('#urutkan').val());
-    function loadData(kategori = 0, urutkan = 'terbaru') {
+    loadData($('#kategori').val(), $('#urutkan').val(), $('#keyword').val());
+
+    function loadData(kategori = 0, urutkan = 'terbaru', keyword = '') {
       $.ajax({
         url: 'queries/menu.php',
         type: 'POST',
         data: {
           kategori: kategori,
-          urutkan: urutkan
+          urutkan: urutkan,
+          keyword: keyword
         },
         dataType: 'json',
         success: function(result) {
-          console.log(result);
           const data = result.data;
           let html = '';
           $.each(data, function(i, row) {
@@ -94,6 +100,9 @@
         }
       });
     }
+    $('#keyword').on('keyup', function(e) {
+      loadData($('#kategori').val(), $('#urutkan').val(), $('#keyword').val().trim());
+    });
 
     $('#kategori').change(function(e) {
       loadData($('#kategori').val(), $('#urutkan').val());
@@ -105,7 +114,7 @@
 
     function rupiah(n) {
       let reverse = n.toString().split('').reverse().join(''),
-      ribuan = reverse.match(/\d{1,3}/g);
+        ribuan = reverse.match(/\d{1,3}/g);
       ribuan = ribuan.join('.').split('').reverse().join('');
       return ribuan;
     }
