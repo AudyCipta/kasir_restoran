@@ -38,7 +38,7 @@
                   </div>
                 </div>
                 <button type="submit" class="btn btn-secondary">Tambah Pesanan</button>
-                <button type="submit" class="btn btn-primary" name="pesan_sekarang">Pesanan Sekarang</button>
+                <button type="submit" class="btn btn-primary" name="pesan_sekarang">Pesan Sekarang</button>
               </form>
             </div>
           </div>
