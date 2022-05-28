@@ -13,7 +13,7 @@
 			<?php flash('message') ?>
 			<?php if (mysqli_num_rows($cek_pesanan_pelanggan) > 0): ?>
 				<div class="alert alert-warning" role="alert">
-					Pesanan Sedang Diproses, silahkan melakukan pembayaran ke kasir kami, Terimaksih.
+					Pesanan Sedang Diproses, silahkan melakukan pembayaran ke kasir kami, Terima kasih.
 				</div>
 			<?php endif ?>
 			<div class="card card-body">
