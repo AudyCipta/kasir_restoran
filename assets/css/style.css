@@ -1,0 +1,41 @@
+html,
+body {
+	height: 100%;
+	font-family: 'Nunito', sans-serif;
+	scroll-behavior: smooth;
+}
+
+.input-group > .input-group-append:not(:last-child) > .input-group-text {
+	border-top-right-radius: .25rem !important;
+    border-bottom-right-radius: .25rem !important;
+}
+
+#wrapper {
+	position: relative;
+	min-height: 100%;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+#menu .menu-img {
+	height: 190px;
+	object-fit: cover;
+	object-position: center;
+}
+
+#menu .menu-info .price {
+	font-size: 20px;
+	color: #e6a42d;
+}
+
+.text-gray {
+	color: #cccaca !important;
+}
+
+.text-gray:hover {
+	color: #aba9a9 !important;
+}
