@@ -22,11 +22,16 @@ switch ($urutkan) {
 $query = "SELECT menu.*, kategori.nama as nama_kategori FROM menu 
 		  JOIN kategori ON menu.kategori_id = kategori.id 
 		  WHERE status = 1 ";
-
+if (!empty($_POST['min']) && !empty($_POST['max'])) {
+	$min = $_POST['min'];
+	$max = $_POST['max'];
+	$query .= "AND menu.harga between $min AND $max ";
+}
 if (!empty($_POST['keyword'])) {
 	$keyword = $_POST['keyword'];
 	$query .= "AND menu.nama LIKE '%$keyword%' ";
 }
+
 $query .= $kategori != 0 ? "AND kategori.id = '$kategori' " : " ";
 $query .= "ORDER BY $sort_by";
 

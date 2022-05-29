@@ -13,29 +13,25 @@
       <div class="container pt-2 pb-5">
         <?php flash('message') ?>
         <h3 class="text-center my-5">Daftar Menu</h3>
-        <div class="row mb-4 align-items-center">
-          <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
             <div class="form-group mb-0 row">
-              <label for="search" class="col-sm-auto col-form-label">Search</label>
+              <label for="search" class="col-sm-4 col-form-label">Search</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control-sm form-control" id="keyword" name="keyword">
               </div>
             </div>
-          </div>
-          <div class="col-md-3">
             <div class="form-group mb-0 row">
               <label for="kategori" class="col-sm-4 col-form-label">Kategori</label>
               <div class="col-sm-8">
                 <select class="form-control custom-select-sm" id="kategori">
-                  <option value="0">Semua</option>
+                  <option>Semua</option>
                   <?php while ($row_kategori = mysqli_fetch_assoc($result_kategori)) : ?>
                     <option value="<?= $row_kategori['id'] ?>"><?= $row_kategori['nama'] ?></option>
                   <?php endwhile ?>
                 </select>
               </div>
             </div>
-          </div>
-          <div class="col-md-3">
             <div class="form-group mb-0 row">
               <label for="urutkan" class="col-sm-4 col-form-label">Urutkan</label>
               <div class="col-sm-8">
@@ -47,9 +43,23 @@
                 </select>
               </div>
             </div>
+            <div class="form-group mb-0 row">
+              <label for="urutkan" class="col-sm-4 col-form-label">Minimal</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control-sm form-control" id="min" name="min" placeholder="Rp Min">
+              </div>
+            </div>
+            <div class="form-group mb-0 row">
+              <label for="urutkan" class="col-sm-4 col-form-label">Maksimal</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control-sm form-control" id="max" name="max" placeholder="Rp Max">
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="row" id="container">
+          <div class="col-md-8">
+            <div class="row" id="container">
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -65,23 +75,25 @@
 <script>
   $(document).ready(function() {
 
-    loadData($('#kategori').val(), $('#urutkan').val(), $('#keyword').val());
+    loadData($('#kategori').val(), $('#urutkan').val(), $('#keyword').val(), $('#min').val(), $('#max').val());
 
-    function loadData(kategori = 0, urutkan = 'terbaru', keyword = '') {
+    function loadData(kategori = 0, urutkan = 'terbaru', keyword = '', min = 0, max = 0) {
       $.ajax({
         url: 'queries/menu.php',
         type: 'POST',
         data: {
           kategori: kategori,
           urutkan: urutkan,
-          keyword: keyword
+          keyword: keyword,
+          min: min,
+          max: max
         },
         dataType: 'json',
         success: function(result) {
           const data = result.data;
           let html = '';
           $.each(data, function(i, row) {
-            html += `<div class="col-lg-3">
+            html += `<div class="col-lg-4">
                       <a href="#" class="menu rounded overflow-hidden d-block">
                         <div class="menu-img">
                           <img src="<?= BASE_URL ?>uploads/${row.foto}" alt="rice" class="img-fluid">
@@ -110,6 +122,14 @@
 
     $('#urutkan').change(function(e) {
       loadData($('#kategori').val(), $('#urutkan').val());
+    });
+
+    $('#min').on('keyup', function(e) {
+      loadData($('#kategori').val(), $('#urutkan').val(), $('#keyword').val().trim(), $('#min').val().trim(), $('#max').val().trim());
+    });
+
+    $('#max').on('keyup', function(e) {
+      loadData($('#kategori').val(), $('#urutkan').val(), $('#keyword').val().trim(), $('#min').val().trim(), $('#max').val().trim());
     });
 
     function rupiah(n) {

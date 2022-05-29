@@ -5,9 +5,9 @@ body {
 	scroll-behavior: smooth;
 }
 
-.input-group > .input-group-append:not(:last-child) > .input-group-text {
+.input-group>.input-group-append:not(:last-child)>.input-group-text {
 	border-top-right-radius: .25rem !important;
-    border-bottom-right-radius: .25rem !important;
+	border-bottom-right-radius: .25rem !important;
 }
 
 #wrapper {
@@ -21,8 +21,8 @@ body {
 	width: 100%;
 }
 
-#menu .menu-img {
-	height: 190px;
+#menu .menu-img img {
+	height: 200px;
 	object-fit: cover;
 	object-position: center;
 }
